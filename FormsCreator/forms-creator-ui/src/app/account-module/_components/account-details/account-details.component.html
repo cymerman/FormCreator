@@ -1,0 +1,108 @@
+﻿<div class="tabs-content">
+  <tabset>
+    <tab>
+      <ng-template tabHeading="">
+        <span tooltip="To są szczegóły twojego konta. Możesz tutaj zmienić swoje hasło dostępu do portalu."
+              placement="bottom"
+              container="body"
+              [delay]="500">
+          Szczegóły profilu
+        </span>
+      </ng-template>
+
+      <div class="row">
+        <div class="col-sm-12 col-md-4">
+          <div class="form-group">
+            <label class="control-label">Login</label>
+            <p class="form-control-static">{{user.login}}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="!isPasswordChanging">
+        <div class="col-sm-12">
+          <button class="btn btn-light" type="button" (click)="startChangingPassword()">Zmień hasło</button>
+        </div>
+      </div>
+
+      <form (ngSubmit)="changePassword()" [formGroup]="form" *ngIf="form && isPasswordChanging">
+        <div class="row">
+          <div class="col-sm-12 col-md-4">
+            <div class="form-group"
+                 [ngClass]="{'error': form.controls.password.invalid && (form.controls.password.dirty)}">
+              <label for="password" class="control-label">Obecne hasło<span class="star">*</span></label>
+              <input id="password"
+                     type="password"
+                     class="form-control"
+                     autocomplete="password"
+                     formControlName="password"/>
+              <div *ngIf="form.controls.password.invalid && (form.controls.password.dirty)"
+                   class="error-text">
+                <div *ngIf="form.controls.password.errors.required">
+                  Pole wymagane
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12 col-md-4">
+            <div class="form-group"
+                 [ngClass]="{'error': form.controls.passwords.controls.newPassword.invalid && (form.controls.passwords.controls.newPassword.dirty)||(form.controls.passwords.invalid && form.controls.passwords.errors && form.controls.passwords.controls.newPassword.dirty && form.controls.passwords.controls.repeatNewPassword.dirty)}"
+                 formGroupName="passwords">
+              <label for="newPassword" class="control-label">Nowe hasło<span class="star">*</span></label>
+              <input id="newPassword"
+                     type="password"
+                     class="form-control"
+                     autocomplete="new-password"
+                     formControlName="newPassword"/>
+              <div *ngIf="form.controls.passwords.controls.newPassword.invalid && (form.controls.passwords.controls.newPassword.dirty)"
+                   class="error-text">
+                <div *ngIf="form.controls.passwords.controls.newPassword.errors.required">
+                  Pole wymagane
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12 col-md-4">
+            <div class="form-group"
+                 [ngClass]="{'error': (form.controls.passwords.controls.repeatNewPassword.invalid && (form.controls.passwords.controls.repeatNewPassword.dirty))||(form.controls.passwords.invalid && form.controls.passwords.errors && form.controls.passwords.controls.newPassword.dirty && form.controls.passwords.controls.repeatNewPassword.dirty)}"
+                 formGroupName="passwords">
+              <label for="repeatNewPassword" class="control-label">Powtórz nowe hasło<span class="star">*</span></label>
+              <input id="repeatNewPassword"
+                     type="password"
+                     class="form-control"
+                     autocomplete="new-password"
+                     formControlName="repeatNewPassword"/>
+              <div *ngIf="form.controls.passwords.controls.repeatNewPassword.invalid && (form.controls.passwords.controls.repeatNewPassword.dirty)"
+                   class="error-text">
+                <div *ngIf="form.controls.passwords.controls.repeatNewPassword.errors.required">
+                  Pole jest wymagane
+                </div>
+              </div>
+              <div
+                *ngIf="form.controls.passwords.invalid && form.controls.passwords.errors && form.controls.passwords.controls.newPassword.dirty && form.controls.passwords.controls.repeatNewPassword.dirty"
+                class="error-text">
+                <div *ngIf="form.controls.passwords.errors.areEqual">
+                  Podane hasła nie są jednakowe
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-4">
+            <div class="float-right">
+              <button class="btn btn-light" type="button" (click)="cancelChangingPassword()">Anuluj</button>
+              <button class="btn btn-success" type="submit">Zmień hasło</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </tab>
+  </tabset>
+</div>

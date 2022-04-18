@@ -1,0 +1,159 @@
+<div class="tabs-content application-definition-details">
+  <tabset>
+    <tab>
+      <ng-template tabHeading>
+  <span tooltip="Tutaj definiuje się dynamiczne formularze."
+        placement="bottom"
+        container="body"
+        [delay]="500">
+Definicja formularza
+  </span>
+      </ng-template>
+      <tabset>
+        <tab heading="Definicja" (selectTab)="changePreviewState(false)">
+          <form (ngSubmit)="save()" [formGroup]="form" *ngIf="form">
+            <div class="row">
+              <div class="col-sm-12 col-md-4">
+                <h4>Status: {{getStatusText(formDefinition.status)}}</h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-4">
+                <div class="form-group"
+                     [ngClass]="{'error': form.controls.title.invalid && (form.controls.title.dirty || submitted)}">
+                  <label for="name" class="control-label">Tytuł<span class="star">*</span></label>
+                  <input type="text"
+                         class="form-control"
+                         id="title"
+                         formControlName="title"
+                         maxlength="100">
+                  <div *ngIf="form.controls.title.invalid && (form.controls.title.dirty || submitted)"
+                       class="error-text">
+                    <div *ngIf="form.controls.title.errors.required">
+                      Pole jest wymagane
+                    </div>
+                    <div *ngIf="form.controls.title.errors.maxlength">
+                      Tytuł przekracza maksymalna liczbe znaków - 100
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-4">
+
+                <div class="form-group"
+                     [ngClass]="{'error': form.controls.name.invalid && (form.controls.name.dirty || submitted)}">
+                  <label for="name" class="control-label">Nazwa</label>
+                  <input type="text"
+                         class="form-control"
+                         id="name"
+                         formControlName="name"
+                         maxlength="100">
+                  <div *ngIf="form.controls.name.invalid && (form.controls.name.dirty || submitted)" class="error-text">
+                    <div *ngIf="form.controls.name.errors.maxlength">
+                      Nazwa przekracza maksymalna liczbe znaków - 100
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-12">
+
+                <div class="form-group"
+                     [ngClass]="{'error': form.controls.description.invalid && (form.controls.description.dirty || submitted)}">
+                  <label for="name" class="control-label">Opis</label>
+                  <textarea type="text"
+                            class="form-control"
+                            id="description"
+                            formControlName="description"
+                            rows="6"> </textarea>
+                  <div *ngIf="form.controls.description.invalid && (form.controls.name.dirty || submitted)"
+                       class="error-text">
+                    <div *ngIf="form.controls.description.errors.maxlength">
+                      Opis przekracza maksymalna liczbe znaków - 2000
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <ng-template #applicationTemplate let-model="item" let-index="index">
+                <p>{{model.title}} <br/>
+                  <small>{{model.description}}</small>
+                </p>
+              </ng-template>
+
+              <div class="row" *ngIf="form.get('isFileCountLimited').value">
+                <div class="col-sm-12 col-md-4">
+                  <div class="form-group"
+                       [ngClass]="{'error': form.controls.fileCount.invalid && (form.controls.fileCount.dirty || submitted)}">
+                    <label for="name" class="control-label">Liczba plików</label>
+                    <input type="number"
+                           class="form-control"
+                           id="number"
+                           formControlName="fileCount"
+                           maxlength="100"
+                           min=0>
+                    <div *ngIf="form.controls.fileCount.invalid && (form.controls.fileCount.dirty || submitted)"
+                         class="error-text">
+                      <div *ngIf="form.controls.fileCount.errors.required">
+                        Pole jest wymagane
+                      </div>
+                      <div *ngIf="form.controls.title.errors.min">
+                        Minimalna liczba to 0
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <form-builder *ngIf="form" [formSettings]="formModel"></form-builder>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="float-right">
+                    <div class="btn-group" dropdown *ngIf="formDefinition.id">
+                      <button type="button" dropdownToggle class="btn btn-light dropdown-toggle dropdown-toggle-split">
+                        Zmień status
+                        <span class="caret"></span>
+                        <span class="sr-only">Zmień status</span>
+                      </button>
+                      <ul *dropdownMenu class="dropdown-menu" role="menu">
+                        <li role="menuitem"><a class="dropdown-item" href="javascript:void (0)"
+                                               (click)="changeStatus(0)" *ngIf="formDefinition.status === 1">Kopia
+                          robocza</a></li>
+                        <li role="menuitem"><a class="dropdown-item" href="javascript:void (0)"
+                                               (click)="changeStatus(1)" *ngIf="formDefinition.status === 0">Zatwierdzony</a>
+                        </li>
+                        <li role="menuitem"><a class="dropdown-item" href="javascript:void (0)"
+                                               (click)="changeStatus(2)"
+                                               *ngIf="formDefinition.status === 1 || formDefinition.status === 3">Opublikowany</a>
+                        </li>
+                        <li role="menuitem"><a class="dropdown-item" href="javascript:void (0)"
+                                               (click)="changeStatus(3)" *ngIf="formDefinition.status === 2">Nieaktywny</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <button type="button" class="btn btn-light" (click)="cancel()">Anuluj</button>
+                    <button type="submit" class="btn btn-success">Zapisz</button>
+                    <button type="button" class="btn btn-info" (click)="close()">Zamknij</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+        </tab>
+        <tab heading="Podgląd" (selectTab)="previewSelected()">
+          <form-renderer [formSettings]="formModel" *ngIf="isPreview"></form-renderer>
+        </tab>
+
+        <tab heading="Deploy" (selectTab)="deploySelected()" *ngIf="isDeployActive()">
+          <a [href]="formUrl" target="_blank">{{formUrl}}</a>
+        </tab>
+      </tabset>
+
+
+    </tab>
+  </tabset>
+</div>

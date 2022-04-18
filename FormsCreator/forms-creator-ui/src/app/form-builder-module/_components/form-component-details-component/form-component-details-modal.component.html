@@ -1,0 +1,282 @@
+<div class="form-component-details-modal">
+
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Szczegóły kontrolki</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body" *ngIf="details">
+    <form (ngSubmit)="save()" [formGroup]="form" *ngIf="form">
+      <div class="row">
+        <div class="col-sm-12">
+          <tabset>
+            <tab heading="Ogólne">
+              <div style="margin-top: 1rem;">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label class="control-label">Etykieta</label>
+
+                      <tinymce
+                        [elementId]="'label'"
+                        (onEditorContentChange)="tinyMceKeyUpHandler($event, 'label')" [value]="form.get('label').value">
+                      </tinymce>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>
+                        <input
+                          type="checkbox"
+                          id="isLabelVisible"
+                          formControlName="isLabelVisible">
+                        <label for="isLabelVisible"></label>
+                        Czy etykieta widoczna?
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="details.type == fieldTypes.html">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label class="control-label">Element do wyświetlenia</label>
+
+                      <tinymce
+                        [elementId]="'htmlContent'"
+                        (onEditorContentChange)="tinyMceKeyUpHandler($event, 'htmlContent')" [value]="form.get('htmlContent').value">
+                      </tinymce>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="isNameVisible()">
+                  <div class="col-sm-12">
+                    <div class="form-group" [ngClass]="{'error': form.controls.name.invalid && (form.controls.name.dirty || isSubmitted)}">
+                      <label class="control-label">Nazwa<span class="star">*</span></label>
+                      <input type="text"
+                             id="name"
+                             class="form-control"
+                             formControlName="name"/>
+                      <div *ngIf="form.controls.name.invalid && (isSubmitted || form.controls.name.dirty )"
+                           class="error-text">
+                        <div *ngIf="form.controls.name.errors.required">
+                          Pole jest wymagane
+                        </div>
+                        <div *ngIf="form.controls.name.errors.nameAlreadyExists">
+                          Taka nazwa już istnieje
+                        </div>
+                        <div *ngIf="form.controls.name.errors.pattern">
+                          Nieprawidłowy format tylko znaki małe i duże A-Z i spacje
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label class="control-label">Placeholder</label>
+                      <input type="text"
+                             id="placeholder"
+                             class="form-control"
+                             formControlName="placeholder"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label class="control-label">Opis</label>
+                      <input type="text"
+                             id="desc"
+                             class="form-control"
+                             formControlName="desc"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label class="control-label">Tooltip</label>
+                      <input type="text"
+                             id="tooltip"
+                             class="form-control"
+                             formControlName="tooltip"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label class="control-label">Formuła wykonywana po aktualizacji pola</label>
+                      <textarea
+                        id="formula"
+                        class="form-control"
+                        formControlName="formula">
+                      </textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="details.type == fieldTypes.img">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label class="control-label">Adres obrazka</label>
+                      <input type="text"
+                             id="src"
+                             class="form-control"
+                             formControlName="src"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div formArrayName="columns" *ngIf="details.type == fieldTypes.columns">
+
+                <hr/>
+                <div *ngFor="let item of getFormArray('columns').controls; let i=index">
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <div class="form-group" [formGroupName]="i"
+                           [ngClass]="{'error': getAbstractControlFromInnerArray(item,'width').invalid && (getAbstractControlFromInnerArray(item,'width').dirty || isSubmitted)}">
+
+                        <label for="{{'width'+i}}" class="control-label">Width</label>
+
+                        <input type="number"
+                               id="{{'width'+i}}"
+                               class="form-control"
+                               formControlName="width" min="0" max="12">
+
+                        <div *ngIf="getAbstractControlFromInnerArray(item,'width').invalid && (isSubmitted || getAbstractControlFromInnerArray(item,'width').dirty )"
+                             class="error-text">
+                          <div *ngIf="getAbstractControlFromInnerArray(item,'width').errors.required">
+                            Pole jest wymagane
+                          </div>
+                          <div *ngIf="getAbstractControlFromInnerArray(item,'width').errors.min">
+                            Minimalna wartość to 0
+                          </div>
+                          <div *ngIf="getAbstractControlFromInnerArray(item,'width').errors.max">
+                            Maksymalna wartość to 12
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="form-group" [formGroupName]="i"
+                           [ngClass]="{'error': getAbstractControlFromInnerArray(item,'offset').invalid && ( getAbstractControlFromInnerArray(item,'offset').dirty || isSubmitted)}">
+                        <label for="{{'offset'+i}}" class="control-label">Offset</label>
+                        <input type="number"
+                               id="{{'offset'+i}}"
+                               class="form-control"
+                               formControlName="offset" min="0" max="12">
+
+                        <div *ngIf="getAbstractControlFromInnerArray(item,'offset').invalid && (isSubmitted ||  getAbstractControlFromInnerArray(item,'offset').dirty )"
+                             class="error-text">
+                          <div *ngIf="getAbstractControlFromInnerArray(item,'offset').errors.required">
+                            Pole jest wymagane
+                          </div>
+                          <div *ngIf="getAbstractControlFromInnerArray(item,'offset').errors.min">
+                            Minimalna wartość to 0
+                          </div>
+                          <div *ngIf="getAbstractControlFromInnerArray(item,'offset').errors.max">
+                            Maksymalna wartość to 12
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-2 align-bottom text-align-right">
+                      <button type="button" class="btn btn-sm btn-danger" (click)="removeColumn(i)"><span class="oi oi-trash"></span></button>
+                    </div>
+                  </div>
+                  <hr/>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <button type="button" class="btn btn-sm btn-secondary" (click)="addColumn()">Dodaj kolumnę</button>
+                  </div>
+                </div>
+              </div>
+              <div formArrayName="values" *ngIf="isValuesFormVisible()">
+                <h4>Wartości</h4>
+                <hr/>
+                <div *ngFor="let item of getFormArray('values').controls; let i=index">
+                  <div class="row">
+                    <div class="col-sm-5">
+                      <div class="form-group"
+                           [ngClass]="{'error': getAbstractControlFromInnerArray(item,'display').invalid && (getAbstractControlFromInnerArray(item,'display').dirty || isSubmitted)}"
+                           [formGroupName]="i">
+
+                        <label for="{{'display'+i}}" class="control-label">Nazwa<span class="star">*</span></label>
+
+                        <input type="text"
+                               id="{{'display'+i}}"
+                               class="form-control"
+                               formControlName="display">
+                        <div
+                          *ngIf="getAbstractControlFromInnerArray(item,'display').invalid && getAbstractControlFromInnerArray(item,'display').dirty || isSubmitted"
+                          class="error-text">
+                          <div *ngIf="getAbstractControlFromInnerArray(item,'display').errors.required">
+                            Pole jest wymagane
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="form-group"
+                           [ngClass]="{'error': getAbstractControlFromInnerArray(item,'value').invalid && (getAbstractControlFromInnerArray(item,'value').dirty || isSubmitted)}"
+                           [formGroupName]="i">
+                        <label for="{{'value'+i}}" class="control-label">Wartość<span class="star">*</span></label>
+                        <input type="text"
+                               id="{{'value'+i}}"
+                               class="form-control"
+                               formControlName="value">
+                        <div
+                          *ngIf="getAbstractControlFromInnerArray(item,'value').invalid && (getAbstractControlFromInnerArray(item,'value').dirty || isSubmitted)"
+                          class="error-text">
+                          <div *ngIf="getAbstractControlFromInnerArray(item,'value').errors.required">
+                            Pole jest wymagane
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-2 text-align-right">
+                      <button type="button" class="btn btn-sm btn-danger" (click)="removeValue(i)"><span class="oi oi-trash"></span></button>
+                    </div>
+                  </div>
+                  <hr/>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <button type="button" class="btn btn-sm btn-secondary" (click)="addValue()">Dodaj wartość</button>
+                  </div>
+                </div>
+              </div>
+            </tab>
+            <tab heading="Walidacja">
+              <form-component-validation-details [details]="details" [formGroup]="form">
+              </form-component-validation-details>
+            </tab>
+            <tab heading="Warunkowe">
+              <form-component-conditional-details [details]="details" [formGroup]="conditionalGroup" [formComponents]="components">
+              </form-component-conditional-details>
+            </tab>
+            <tab heading="Style">
+              <form-component-style-details [details]="details" [formGroup]="stylesGroup">
+              </form-component-style-details>
+            </tab>
+          </tabset>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="text-right">
+            <button type="button" class="btn btn-success" (click)="save()">Zapisz</button>
+            <button type="button" class="btn btn-info" (click)="close()">Anuluj</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

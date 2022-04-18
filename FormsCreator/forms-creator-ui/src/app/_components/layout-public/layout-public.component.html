@@ -1,0 +1,50 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-4 col-md-2 logo-col">
+      <a href="javascript:void (0)" routerLink="/" id="logo">
+        <img [imgSrc]="'/assets/img/logo.png'" alt="">
+      </a>
+    </div>
+    <div class="col-8 col-md-10">
+      <h1 class="main-h1">
+        Kreator szablonów formularzy
+      </h1>
+      <h2 class="main-h2">
+        Projekt do pracy licencjackiej
+      </h2>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-6 home-left order-2 order-lg-1">
+    </div>
+    <div class="col-lg-6 home-right order-1 order-lg-2">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+<footer >
+  <div class="dark-bg">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6">
+        </div>
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-7">
+
+            </div>
+            <div class="col-sm-5 copyrights">
+              <p>
+                © Mateusz Cymerman
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

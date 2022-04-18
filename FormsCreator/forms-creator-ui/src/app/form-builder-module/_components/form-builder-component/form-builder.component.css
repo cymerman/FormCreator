@@ -1,0 +1,43 @@
+.builder-item {
+  font-size: 1.5rem;
+}
+
+select[id="form-type"]{
+  width: 100%;
+}
+
+accordion-group{
+  margin-bottom: 15px;
+}
+
+.panel-heading{
+  cursor:pointer;
+}
+
+.panel-title{
+  font-size: 1.6rem;
+}
+
+.root-container .ngx-dnd-container{
+  border :0;
+  padding: 0;
+  margin: 0;
+  overflow:auto;
+  background-color: transparent !important;
+}
+
+.root-container .ngx-dnd-container.gu-empty, .builder-target .root-container .ngx-dnd-container{
+  padding:10px;
+  border: 0.2rem dashed;
+  border-radius: 0.3rem;
+}
+
+.root-container .ngx-dnd-container .ngx-dnd-item{
+  margin: 0 0 10px 0;
+  background-color: #f7f7f7;
+  border: 1px solid #d8d8d8;
+}
+
+.root-container .ngx-dnd-container .ngx-dnd-item:hover{
+  border: 1px solid #acacac;
+}

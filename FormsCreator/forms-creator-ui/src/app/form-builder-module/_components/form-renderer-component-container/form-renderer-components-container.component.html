@@ -1,0 +1,164 @@
+<div *ngIf="components && form" [formGroup]="form">
+  <div *ngFor="let component of components">
+    <div class="row" *ngIf="isComponentConditionalAndVisible(component)">
+      <div class="col-sm-12 col-md-12" [ngClass]="getComponentClasses(component)">
+        <div *ngIf="component.type != fieldTypes.table">
+          <div class="form-group" [ngSwitch]="component.type"
+               [ngClass]="{'error': form.controls[component.name] && (form.controls[component.name].invalid && (form.controls[component.name].dirty || isSubmitted))}">
+            <label [attr.for]="component.name"
+                   [ngClass]="getLabelClasses(component)"
+                   class="control-label"
+                   *ngIf="component.isLabelVisible && component.label && component.type !== fieldTypes.checkBox">
+              <span [innerHtml]="component.label | safeHtml"></span>
+              <span class="oi oi-info circle-icon" *ngIf="component.tooltip" [tooltip]="component.tooltip"></span>
+              <span class="star" *ngIf="component.validation && component.validation.required">*</span>
+            </label>
+            <input *ngSwitchCase="fieldTypes.text"
+                   type="text"
+                   class="form-control"
+                   [attr.placeholder]="component.placeholder"
+                   [attr.id]="component.name"
+                   [formControlName]="component.name"
+                   (change)="evalFormula(component.formula)">
+
+            <input *ngSwitchCase="fieldTypes.email"
+                   type="email"
+                   class="form-control"
+                   [attr.placeholder]="component.placeholder"
+                   [attr.id]="component.name"
+                   [formControlName]="component.name"
+                   (change)="evalFormula(component.formula)">
+
+            <input *ngSwitchCase="fieldTypes.number"
+                   type="number"
+                   class="form-control"
+                   [attr.placeholder]="component.placeholder"
+                   [attr.id]="component.name"
+                   [formControlName]="component.name"
+                   (change)="evalFormula(component.formula)">
+
+            <textarea *ngSwitchCase="fieldTypes.textArea"
+                      [attr.placeholder]="component.placeholder"
+                      [attr.id]="component.name"
+                      [formControlName]="component.name"
+                      (change)="evalFormula(component.formula)"></textarea>
+
+            <input *ngSwitchCase="fieldTypes.date"
+                   type="text"
+                   class="form-control form-control-sm"
+                   #dp="bsDatepicker"
+                   [attr.id]="component.name"
+                   bsDatepicker
+                   [attr.placeholder]="component.placeholder"
+                   [formControlName]="component.name"
+                   [bsConfig]="{dateInputFormat: 'YYYY-MM-DD'}"
+                   (change)="evalFormula(component.formula)">
+
+            <label *ngSwitchCase="fieldTypes.checkBox" class="control-label checkbox-label"
+                   [ngClass]="getLabelClasses(component)">
+              <input
+                type="checkbox"
+                [attr.id]="component.name"
+                [formControlName]="component.name"
+                (change)="evalFormula(component.formula)">
+              <label [attr.for]="component.name"></label>
+              <span [innerHtml]="component.label | safeHtml"></span>
+              <span class="star" *ngIf="component.validation && component.validation.required">*</span>
+              <span class="oi oi-info circle-icon" *ngIf="component.tooltip" [tooltip]="component.tooltip"></span>
+            </label>
+
+            <div *ngSwitchCase="fieldTypes.radio">
+              <label *ngFor="let item of component.values" class="radio-label">
+                <input type="radio"
+                       [formControlName]="component.name"
+                       [attr.id]="item.value"
+                       [value]="item.value"
+                       (change)="evalFormula(component.formula)">
+                <label [attr.for]="item.value"></label>
+                {{item.display}}
+              </label>
+            </div>
+            <div *ngSwitchCase="fieldTypes.html">
+              <div [innerHtml]="component.htmlContent | safeHtml">
+              </div>
+            </div>
+            <select *ngSwitchCase="fieldTypes.select"
+                    class="form-control form-control-sm"
+                    [attr.id]="component.name"
+                    [formControlName]="component.name"
+                    (change)="selectChanged(component, $event)">
+              <option [value]="null" default disabled> {{component.placeholder}}</option>
+              <option [value]="item.value" *ngFor="let item of getSelectValues(component)">{{item.display}}</option>
+            </select>
+
+            <img *ngSwitchCase="fieldTypes.img"
+                 [src]="component.src"
+                 [alt]="component.alt"
+                 [attr.id]="component.name"/>
+
+            <div class="row" *ngSwitchCase="fieldTypes.columns">
+              <div class="{{'col-sm-' + column.width}} {{'offset-sm-' + column.offset}}" *ngFor="let column of component.columns; let i = index">
+                <form-renderer-components-container [components]="column.childrens"
+                                                         [form]="form"
+                                                         [isSubmitted]="isSubmitted"
+                                                         [dictionaryData]="dictionaryData"
+                                                         (addRow)="addRowHandler($event)"
+                                                         (removeRow)="removeRowHandler($event)"></form-renderer-components-container>
+              </div>
+            </div>
+
+            <div *ngSwitchCase="fieldTypes.section">
+              <form-renderer-components-container [components]="component.childrens"
+                                                       [form]="form"
+                                                       [isSubmitted]="isSubmitted"
+                                                       [dictionaryData]="dictionaryData"
+                                                       (addRow)="addRowHandler($event)"
+                                                       (removeRow)="removeRowHandler($event)"></form-renderer-components-container>
+            </div>
+
+            <small *ngIf="component.desc" class="form-text text-muted field-desc">{{component.desc}}</small>
+
+            <div *ngIf="form.controls[component.name] && (form.controls[component.name].invalid && (form.controls[component.name].dirty || isSubmitted))"
+                 class="error-text">
+              <div *ngIf="form.controls[component.name].errors.required">
+                Pole jest wymagane.
+              </div>
+              <div *ngIf="form.controls[component.name].errors.maxlength">
+                Długość za długa, maksymalna wartość to: {{component.validation.maxLength}}
+              </div>
+              <div *ngIf="form.controls[component.name].errors.minlength">
+                Długość za krótka, minimalna wartość to: {{component.validation.minLength}}
+              </div>
+              <div *ngIf="form.controls[component.name].errors.min">
+                Minimum to: {{component.validation.min}}
+              </div>
+              <div *ngIf="form.controls[component.name].errors.max">
+                Maksimum to: {{component.validation.max}}
+              </div>
+              <div *ngIf="form.controls[component.name].errors.pattern || form.controls[component.name].errors.email">
+                Nieprawidłowy format
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="component.type == fieldTypes.table">
+          <label [attr.for]="component.name" class="label"
+                 *ngIf="component.isLabelVisible && component.label"
+                 [ngClass]="getLabelClasses(component)"
+                 [innerHtml]="component.label | safeHtml">
+            <span class="oi oi-info circle-icon" *ngIf="component.tooltip" [tooltip]="component.tooltip"></span>
+          </label>
+          <form-renderer-table
+            [name]="component.name"
+            [components]="component.childrens"
+            [form]="form"
+            [isSubmitted]="isSubmitted"
+            (addRow)="addRowHandler($event)"
+            (removeRow)="removeRowHandler($event)"></form-renderer-table>
+          <small *ngIf="component.desc" class="form-text text-muted field-desc">{{component.desc}}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

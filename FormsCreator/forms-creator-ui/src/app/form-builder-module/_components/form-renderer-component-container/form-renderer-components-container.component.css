@@ -1,0 +1,7 @@
+form-renderer-components-container .checkbox-label p {
+  display: inline;
+}
+
+form-renderer-components-container .control-label p {
+  display: inline;
+}

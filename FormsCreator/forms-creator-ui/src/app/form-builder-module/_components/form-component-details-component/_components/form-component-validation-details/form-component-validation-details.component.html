@@ -1,0 +1,72 @@
+<div style="margin-top: 1rem;" *ngIf="formGroup" [formGroup]="formGroup">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label>
+          <input
+            type="checkbox"
+            id="isRequired"
+            formControlName="required">
+          <label for="isRequired"></label>
+          Wymagane
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="isLengthAndPatternVisible()">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label class="control-label">Minimalna długość</label>
+        <input type="number"
+               id="minLength"
+               class="form-control"
+               formControlName="minLength"/>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="isLengthAndPatternVisible()">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label class="control-label">Maksymalna długość</label>
+        <input type="number"
+               id="maxLength"
+               class="form-control"
+               formControlName="maxLength"/>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="isMaxMinVisible()">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label class="control-label">Minimum</label>
+        <input type="number"
+               id="min"
+               class="form-control"
+               formControlName="min"/>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="isMaxMinVisible()">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label class="control-label">Maximum</label>
+        <input type="number"
+               id="max"
+               class="form-control"
+               formControlName="max"/>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="isLengthAndPatternVisible()">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label class="control-label">Wzór</label>
+        <input type="text"
+               id="pattern"
+               class="form-control"
+               formControlName="pattern"/>
+      </div>
+    </div>
+  </div>
+</div>
+

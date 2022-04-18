@@ -1,0 +1,75 @@
+<div *ngIf="formSettings">
+  <div class="row mb-4">
+    <div class="col-sm-12 col-md-3">
+      <label class="control-label" for="form-type">Typ formularza</label>
+      <select
+        id="form-type"
+        [(ngModel)]="formSettings.isWizard"
+        (change)="onWizardChange($event)">
+        <option [value]="false">Zwykły</option>
+        <option [value]="true">Kroki</option>
+      </select>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <accordion>
+        <accordion-group heading="Podstawowe" [isOpen]="true">
+          <ngx-dnd-container
+            class="root-container"
+            [model]="inputComponents"
+            [dropZones]="['builder-target']"
+            [copy]="true"
+            (drag)="builderDrag($event)">
+
+            <ng-template let-item="model">
+      <span class="builder-item"><span class="oi" ngClass="{{item.builderIcon}}"></span>
+        {{item.builderDesc}}
+      </span>
+            </ng-template>
+          </ngx-dnd-container>
+        </accordion-group>
+        <accordion-group heading="Struktury">
+          <ngx-dnd-container
+            class="root-container"
+            [model]="layoutComponents"
+            [dropZones]="['builder-target']"
+            [copy]="true"
+            (drag)="builderDrag($event)">
+
+            <ng-template let-item="model">
+      <span class="builder-item"><span class="oi" ngClass="{{item.builderIcon}}"></span>
+        {{item.builderDesc}}
+      </span>
+            </ng-template>
+          </ngx-dnd-container>
+        </accordion-group>
+      </accordion>
+
+    </div>
+    <div class="col-md-9 builder-target" *ngIf="!formSettings.isWizard">
+      <form-builder-components-container [formSettings]="formSettings" [components]="formSettings.components"></form-builder-components-container>
+    </div>
+    <div class="col-md-9 builder-target" *ngIf="formSettings.isWizard">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="text-right">
+            <button type="button" class="btn btn-success" (click)="addPage()">Dodaj stronę</button>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <tabset>
+            <tab *ngFor="let page of formSettings.pages; let i = index"
+                 [removable]="page.removable"
+                 (removed)="removeTabHandler(i)"
+                 [heading]="page.title + ' ' + page.index">
+              <form-builder-components-container [formSettings]="formSettings" [components]="page.components"></form-builder-components-container>
+            </tab>
+          </tabset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

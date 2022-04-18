@@ -1,0 +1,29 @@
+<div class="row">
+
+  <div class="col-sm-12 col-md-3 " *ngFor="let item of filterItems">
+    <div class="form-group" [ngClass]="{'error': !item.isValid}">
+      <filter-item [item]="item"></filter-item>
+    </div>
+  </div>
+
+</div>
+<div class="row mt-1 mb-4">
+  <div class="col-sm-12">
+    <div class="float-right">
+      <button class="btn btn-secondary" type="button" (click)="button.click()" *ngFor="let button of additionalButtons">
+        {{button.text}}
+      </button>
+      <button class="btn btn-light" type="button" (click)="clearFilter()" *ngIf="isFilterSet()">
+        Wyczyść
+      </button>
+      <button class="btn btn-primary" (click)="emitFilterClick()">
+        Filtruj
+      </button>
+      <span>
+        <button class="btn btn-success" (click)="emitAddClick()" *ngIf="addButtonVisible" >
+          Dodaj
+        </button>
+      </span>
+    </div>
+  </div>
+</div>

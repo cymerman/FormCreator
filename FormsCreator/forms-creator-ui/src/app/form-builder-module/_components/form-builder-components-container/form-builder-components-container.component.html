@@ -1,0 +1,132 @@
+<div *ngIf="components">
+  <ngx-dnd-container
+    class="root-container"
+    [model]="components"
+    dropZone="builder-target"
+    [removeOnSpill]="true"
+    (drop)="handleDropEvent($event)">
+
+    <ng-template let-model="model" let-template="template">
+
+      <div class="form-group" [ngSwitch]="model.type" style="position: relative">
+        <div class="corner-settings">
+          <button type="button" class="btn btn-sm btn-default" (click)="edit(model)">
+            <span class="oi oi-cog"></span>
+          </button>
+          <button type="button" class="btn btn-sm btn-danger" (click)="remove(model.id)">
+            <span class="oi oi-trash"></span>
+          </button>
+        </div>
+        <label [attr.for]="model.id" class="label"
+               *ngIf="model.isLabelVisible && model.label && model.type !== fieldTypes.checkBox"
+               [innerHtml]="model.label | safeHtml">
+          <span class="oi oi-info circle-icon" *ngIf="model.tooltip" [tooltip]="model.tooltip"></span>
+          <span class="star" *ngIf="model.validation && model.validation.required">*</span>
+        </label>
+
+        <div *ngSwitchCase="fieldTypes.section">
+          <ngx-dnd-container
+            dropZone="builder-target"
+            [model]="model.childrens"
+            [removeOnSpill]="true"
+            [template]="template"
+            (drop)="handleDropEvent($event)">
+          </ngx-dnd-container>
+        </div>
+        <input *ngSwitchCase="fieldTypes.text"
+               type="text"
+               class="form-control"
+               [attr.placeholder]="model.placeholder"
+               [attr.id]="model.id">
+
+        <input *ngSwitchCase="fieldTypes.email"
+               type="email"
+               class="form-control"
+               [attr.placeholder]="model.placeholder"
+               [attr.id]="model.id">
+
+        <input *ngSwitchCase="fieldTypes.number"
+               type="number"
+               class="form-control"
+               [attr.placeholder]="model.placeholder"
+               [attr.id]="model.id">
+
+        <textarea *ngSwitchCase="fieldTypes.textArea"
+                  [attr.placeholder]="model.placeholder"
+                  [attr.id]="model.id"></textarea>
+
+        <input *ngSwitchCase="fieldTypes.date"
+               type="text"
+               class="form-control form-control-sm"
+               #dp="bsDatepicker"
+               [attr.id]="model.id"
+               bsDatepicker
+               [attr.placeholder]="model.placeholder"
+               [bsConfig]="{dateInputFormat: 'YYYY-MM-DD'}">
+
+        <label *ngSwitchCase="fieldTypes.checkBox">
+          <input
+            type="checkbox"
+            [attr.id]="model.id">
+          <label [attr.for]="model.name"></label>
+          <span [innerHtml]="model.label | safeHtml" style="display: inline-block"></span>
+          <span class="star" *ngIf="model.validation && model.validation.required" style="display: inline-block">*</span>
+        </label>
+
+        <div *ngSwitchCase="fieldTypes.radio">
+          <label *ngFor="let item of model.values">
+            <input type="radio"
+                   [attr.id]="model.id"
+                   [value]="item.value">
+            <label [attr.for]="item.value"></label>
+            {{item.display}}
+          </label>
+        </div>
+
+        <div *ngSwitchCase="fieldTypes.html">
+          <div [innerHtml]="model.htmlContent | safeHtml">
+          </div>
+        </div>
+
+        <select *ngSwitchCase="fieldTypes.select"
+                class="form-control form-control-sm"
+                [attr.id]="model.id">
+          <option [value]="null"> {{model.placeholder}}</option>
+          <option [value]="item.value" *ngFor="let item of model.values">{{item.display}}</option>
+        </select>
+
+        <img *ngSwitchCase="fieldTypes.img"
+             style="width:100%;"
+             [src]="model.src"
+             [alt]="model.alt"
+             [attr.id]="model.id"/>
+
+        <div class="container" *ngSwitchCase="fieldTypes.columns">
+          <div class="row">
+            <div class="{{'col-sm-' + column.width}} {{'offset-sm-' + column.offset}} mb-4" *ngFor="let column of model.columns; let i = index">
+              <ngx-dnd-container
+                dropZone="builder-target"
+                [model]="model.columns[i].childrens"
+                [removeOnSpill]="true"
+                [template]="template"
+                (drop)="handleDropEvent($event)">
+              </ngx-dnd-container>
+            </div>
+          </div>
+        </div>
+        <div *ngSwitchCase="fieldTypes.table">
+          <ngx-dnd-container
+            dropZone="builder-target"
+            [model]="model.childrens"
+            [removeOnSpill]="true"
+            [template]="template"
+            (drop)="handleDropEvent($event)">
+          </ngx-dnd-container>
+        </div>
+
+        <small *ngIf="model.desc" class="form-text text-muted field-desc">{{model.desc}}</small>
+      </div>
+    </ng-template>
+  </ngx-dnd-container>
+</div>
+

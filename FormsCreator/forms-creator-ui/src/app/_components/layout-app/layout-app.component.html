@@ -1,0 +1,57 @@
+<header>
+  <a href="javascript:void (0)" routerLink="/dashboard" id="crm-logo">
+    <img [imgSrc]="'/assets/img/logo.png'" alt="">
+  </a>
+  <div id="mobile-buttons">
+    <a href="javascript:void (0)" routerLink="/account" id="user-button"></a>
+    <div id="menu-button" (click)="toggleMenu()" [ngClass]="{'active': active}">
+      <span></span>
+    </div>
+  </div>
+  <ul id="crm-menu" [ngClass]="{'menu-showed': active}">
+    <li routerLinkActive="active">
+      <a href="javascript:void (0)" (click)="toogleCollapsed(0)"><img [imgSrc]="'/assets/img/icon-account.png'" alt="">Moje konto</a>
+      <ul [collapse]="collapsed[0]" routerLinkActive="uncollapse">
+        <li routerLinkActive="active">
+          <a href="javascript:void (0)" (click)="active=false" routerLink="/account">&nbsp;&nbsp;&nbsp;Profil</a>
+        </li>
+      </ul>
+    </li>
+    <li routerLinkActive="active">
+      <a href="javascript:void (0)" (click)="toogleCollapsed(1)"><img [imgSrc]="'/assets/img/icon-folder.png'" alt="">Formularze</a>
+      <ul [collapse]="collapsed[1]" routerLinkActive="uncollapse">
+        <li routerLinkActive="active">
+          <a href="javascript:void (0)" (click)="active=false" routerLink="/form-definition/details">&nbsp;&nbsp;&nbsp;Kreator formularza</a>
+        </li>
+        <li routerLinkActive="active">
+          <a href="javascript:void (0)" (click)="active=false" routerLink="/form-definition/list">&nbsp;&nbsp;&nbsp;Twoje definicje formularzy</a>
+        </li>
+        <li routerLinkActive="active">
+          <a href="javascript:void (0)" (click)="active=false" routerLink="/form-definitions">&nbsp;&nbsp;&nbsp;Formularze</a>
+        </li>
+      </ul>
+    </li>
+
+  </ul>
+</header>
+
+<div id="top-bar" [ngClass]="{'menu-showed': active}">
+  <div class="right">
+    <div class="user-info">
+      Zalogowany jako: <span>Admin{{userName}}</span>
+    </div>
+    <div class="profile-photo"></div>
+    <a href="javascript:void(0)" class="logout" (click)="logout()"></a>
+  </div>
+</div>
+
+<div id="main-wrapper">
+  <router-outlet></router-outlet>
+</div>
+
+
+<footer>
+  <p class="copyrights">
+    © Stworzone przez Mateusz Cymerman
+  </p>
+</footer>

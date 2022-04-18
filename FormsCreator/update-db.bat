@@ -1,0 +1,1 @@
+dotnet ef database update --startup-project FormsCreator.App --project FormsCreator.Domain --context Context

@@ -1,0 +1,81 @@
+<div class="filter-item-component">
+  <label>{{item.display}}</label>
+  <div class="input-group">
+    <div class="btn-group input-group-prepend" dropdown *ngIf="!item.isCombo && item.columnType != 5">
+      <button dropdownToggle type="button" class="btn btn-sm btn-default dropdown-toggle">
+        {{item.operator|filterOperatorName}}&nbsp;<span class="caret"></span>
+      </button>
+      <ul *dropdownMenu class="dropdown-menu" role="menu">
+        <li role="menuitem"><a class="dropdown-item" href="javascript:void (0)" (click)="selectOperator(1)" *ngIf="item.columnType == 2 || item.columnType == 3 || item.columnType == 4">&lt;</a></li>
+        <li role="menuitem"><a class="dropdown-item" href="javascript:void (0)" (click)="selectOperator(2)" *ngIf="item.columnType == 2 || item.columnType == 3 || item.columnType == 4">&gt;</a></li>
+        <li role="menuitem"><a class="dropdown-item" href="javascript:void (0)" (click)="selectOperator(3)">=</a></li>
+        <li role="menuitem"><a class="dropdown-item" href="javascript:void (0)" (click)="selectOperator(4)" *ngIf="item.columnType == 2 || item.columnType == 3 || item.columnType == 4">&lt;=</a></li>
+        <li role="menuitem"><a class="dropdown-item" href="javascript:void (0)" (click)="selectOperator(5)" *ngIf="item.columnType == 2 || item.columnType == 3 || item.columnType == 4">&gt;=</a></li>
+        <li role="menuitem"><a class="dropdown-item" href="javascript:void (0)" (click)="selectOperator(6)" *ngIf="item.columnType == 1 ">Zaczyna się</a></li>
+        <li role="menuitem"><a class="dropdown-item" href="javascript:void (0)" (click)="selectOperator(7)" *ngIf="item.columnType == 1 ">Kończy się</a></li>
+        <li role="menuitem"><a class="dropdown-item" href="javascript:void (0)" (click)="selectOperator(8)" *ngIf="item.columnType == 1 ">Zawiera</a></li>
+      </ul>
+    </div>
+    <!--TEXT-->
+    <input type="text"
+           class="form-control"
+           [(ngModel)]="item.value"
+           #value="ngModel"
+           name="value"
+           (change)="emitFilterChanged(!value.invalid)"
+           *ngIf="item.columnType === 1 && !item.isCombo">
+
+    <!--DECIMAL-->
+    <input type="text"
+           class="form-control"
+           [(ngModel)]="item.value"
+           #value="ngModel"
+           name="value"
+           pattern="[-]?\d+,?\d*"
+           (change)="emitFilterChanged(!value.invalid)"
+           *ngIf="item.columnType === 2 && !item.isCombo">
+
+    <!--INTEGER-->
+    <input type="text"
+           class="form-control"
+           [(ngModel)]="item.value"
+           #value="ngModel"
+           name="value"
+           pattern="[-]?\d+"
+           (change)="emitFilterChanged(!value.invalid)"
+           *ngIf="item.columnType === 3 && !item.isCombo">
+
+    <!--DATE-->
+    <input type="text"
+           class="form-control"
+           #dp="bsDatepicker"
+           #value="ngModel"
+           bsDatepicker
+           [(ngModel)]="item.value"
+           name="value"
+           [bsConfig]="{dateInputFormat: 'YYYY-MM-DD'}"
+           (ngModelChange)="emitFilterChanged(!value.invalid)"
+           *ngIf="item.columnType === 4 && !item.isCombo">
+
+    <!--BOOL-->
+    <select class="form-control"
+            #value="ngModel"
+            [(ngModel)]="item.value"
+            name="value"
+            (change)="emitFilterChanged(!value.invalid)"
+            *ngIf="item.columnType === 5 && !item.isCombo">
+      <option [ngValue]="null">Razem</option>
+      <option [ngValue]="true">Tak</option>
+      <option [ngValue]="false">Nie</option>
+    </select>
+
+    <select class="form-control"
+            #value="ngModel"
+            [(ngModel)]="item.value"
+            name="value"
+            (change)="emitFilterChanged(!value.invalid)"
+            *ngIf="item.isCombo">
+      <option [ngValue]="option.value" *ngFor="let option of item.values">{{option.text}}</option>
+    </select>
+  </div>
+</div>

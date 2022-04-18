@@ -1,0 +1,43 @@
+<div style="margin-top: 1rem;" *ngIf="formGroup" [formGroup]="formGroup">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label class="control-label">Jest widoczny</label>
+        <select class="form-control"
+                formControlName="isVisible">
+
+          <option [ngValue]="null"></option>
+          <option [ngValue]="true">Tak</option>
+          <option [ngValue]="false">Nie</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label class="control-label">Gdy pole</label>
+        <select class="form-control"
+                formControlName="relatedToName">
+
+          <option [value]="null"></option>
+          <option [value]="name" *ngFor="let name of fieldNames">{{name}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label class="control-label">Ma wartość</label>
+        <input type="text"
+               id="pattern"
+               class="form-control"
+               formControlName="relatedToValue"/>
+      </div>
+    </div>
+  </div>
+
+</div>
+

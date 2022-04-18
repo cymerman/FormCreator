@@ -1,0 +1,6 @@
+<a (click)="sort()" class="text-nowrap sorting" href="javascript:void (0)">
+  <ng-content></ng-content>
+  <span *ngIf="sortDirection === 1" class="arrow" aria-hidden="true">&uarr;</span>
+  <span *ngIf="sortDirection === 2" class="arrow" aria-hidden="true">&darr;</span>
+  <span *ngIf="sortDirection === 0" class="arrow none" aria-hidden="true"></span>
+</a>

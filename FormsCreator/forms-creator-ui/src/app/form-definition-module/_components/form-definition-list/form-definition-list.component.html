@@ -1,0 +1,117 @@
+<div class="tabs-content">
+  <tabset>
+    <tab>
+      <ng-template tabHeading>
+  <span tooltip="Tutaj widzisz listę zdefiniowanych definicji formularzy przez Ciebie."
+        placement="bottom"
+        container="body"
+        [delay]="500">
+Definicje formularzy
+  </span>
+      </ng-template>
+
+      <helper-list-filter [filterItems]="filters"
+                        [addButtonVisible]="true"
+                        (filterClick)="onFilterClick()"
+                        (addClick)="onAddClick()"></helper-list-filter>
+
+      <div class="row">
+        <div class="col-sm-12 table-responsive-lg table-wrapper">
+          <table helperTable
+                 #table="helperTable"
+                 [helperTableOrderBy]="'id'"
+                 [helperTableOrderDirection]="1"
+                 (helperTableGetData)="loadData($event)"
+                 class="table table-striped bordered wider-table">
+            <thead>
+            <tr>
+              <th>
+                <column-sorter [fieldName]="'id'">
+                  Id
+                </column-sorter>
+              </th>
+              <th>
+                <column-sorter [fieldName]="'name'">
+                  Nazwa
+                </column-sorter>
+              </th>
+              <th>
+                <column-sorter [fieldName]="'title'">
+                  Tytuł
+                </column-sorter>
+              </th>
+              <th>
+                <column-sorter [fieldName]="'description'">
+                  Opis
+                </column-sorter>
+              </th>
+              <th>
+                <column-sorter [fieldName]="'status'">
+                  Status
+                </column-sorter>
+              </th>
+              <th>
+                Akcje
+              </th>
+            </tr>
+            </thead>
+            <tbody *ngIf="rows.length > 0">
+            <tr *ngFor="let row of rows">
+              <td>
+                {{row.id}}
+              </td>
+              <td>
+                {{row.name}}
+              </td>
+              <td>
+                {{row.title}}
+              </td>
+              <td>
+                {{row.description}}
+              </td>
+              <td>
+                {{getStatusText(row.status)}}
+              </td>
+              <td>
+                <div class="btn-group btn-group-sm" dropdown>
+                  <button type="button" class="btn btn-info" routerLink="../details/{{row.id}}">Szczegóły</button>
+                  <button type="button" dropdownToggle class="btn btn-info dropdown-toggle dropdown-toggle-split">
+                    <span class="caret"></span>
+                    <span class="sr-only">Pozostałe akcje!</span>
+                  </button>
+                  <ul *dropdownMenu class="dropdown-menu" role="menu">
+                    <li role="menuitem">
+                      <a class="dropdown-item" href="javascript:void (0)" (click)="delete(row.id)">Usuń</a>
+                    </li>
+                    <li role="menuitem">
+                      <a class="dropdown-item" href="javascript:void (0)" (click)="copy(row.id)">Kopiuj definicję</a>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+
+            <tbody *ngIf="rows.length === 0">
+            <tr>
+              <td colspan="7" class="no-records">
+                Brak wyników spełniających kryteria
+              </td>
+            </tr>
+            </tbody>
+
+            <tfoot>
+            <tr>
+              <td colspan="7">
+                <paginator [paginatorDataLength]="totalRows">
+                </paginator>
+              </td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+    </tab>
+  </tabset>
+</div>

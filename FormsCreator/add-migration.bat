@@ -1,0 +1,1 @@
+dotnet ef migrations add %1 --startup-project FormsCreator.App --project FormsCreator.Domain --context Context --output-dir Db\Migrations

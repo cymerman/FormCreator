@@ -1,0 +1,28 @@
+<div *ngIf="formSettings" id="mainDiv" #mainDiv>
+
+
+  <div *ngIf="!formSettings.isWizard">
+    <form-renderer-page [components]="formSettings.components" [formValues]="formValues"></form-renderer-page>
+  </div>
+  <div *ngIf="formSettings.isWizard">
+    <div *ngFor="let page of formSettings.pages; let i = index">
+      <div [hidden]="i+1 != currentPage">
+        <div class="row">
+          <div class="col-sm-12">
+            <h3>{{page.title +" "+ page.index}}</h3>
+          </div>
+        </div>
+        <form-renderer-page [components]="page.components" [formValues]="formValues"></form-renderer-page>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="text-right">
+          <button type="button" class="btn btn-sm btn-primary" (click)="changePage(-1);" *ngIf="currentPage!=1">Poprzednia</button>
+          <button type="submit" class="btn btn-sm btn-primary" (click)="changePage(1);" *ngIf="lastPage != currentPage">Następna</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

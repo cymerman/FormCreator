@@ -1,0 +1,46 @@
+<ul class="pagination pull-right float-sm-right" *ngIf="dataLength > 0">
+  <li class="page-item" [class.disabled]="activePage <= 1" (click)="setPage(1)">
+    <a class="page-link" style="cursor: pointer">&laquo;</a>
+  </li>
+  <li class="page-item" [class.disabled]="activePage <= 1" (click)="setPage(activePage - 1)">
+    <a class="page-link" style="cursor: pointer">&lsaquo;</a>
+  </li>
+  <li class="page-item" *ngIf="activePage > 4 && activePage + 1 > lastPage" (click)="setPage(activePage - 4)">
+    <a class="page-link" style="cursor: pointer">{{activePage-4}}</a>
+  </li>
+  <li class="page-item" *ngIf="activePage > 3 && activePage + 2 > lastPage" (click)="setPage(activePage - 3)">
+    <a class="page-link" style="cursor: pointer">{{activePage-3}}</a>
+  </li>
+  <li class="page-item" *ngIf="activePage > 2" (click)="setPage(activePage - 2)">
+    <a class="page-link" style="cursor: pointer">{{activePage-2}}</a>
+  </li>
+  <li class="page-item" *ngIf="activePage > 1" (click)="setPage(activePage - 1)">
+    <a class="page-link" style="cursor: pointer">{{activePage-1}}</a>
+  </li>
+  <li class="page-item active">
+    <a class="page-link" style="cursor: pointer">{{activePage}}</a>
+  </li>
+  <li class="page-item" *ngIf="activePage + 1 <= lastPage" (click)="setPage(activePage + 1)">
+    <a class="page-link" style="cursor: pointer">{{activePage+1}}</a>
+  </li>
+  <li class="page-item" *ngIf="activePage + 2 <= lastPage" (click)="setPage(activePage + 2)">
+    <a class="page-link" style="cursor: pointer">{{activePage+2}}</a>
+  </li>
+  <li class="page-item" *ngIf="activePage + 3 <= lastPage && activePage < 3" (click)="setPage(activePage + 3)">
+    <a class="page-link" style="cursor: pointer">{{activePage+3}}</a>
+  </li>
+  <li class="page-item" *ngIf="activePage + 4 <= lastPage && activePage < 2" (click)="setPage(activePage + 4)">
+    <a class="page-link" style="cursor: pointer">{{activePage+4}}</a>
+  </li>
+  <li class="page-item" [class.disabled]="activePage + 1 > lastPage" (click)="setPage(activePage + 1)">
+    <a class="page-link" style="cursor: pointer">&rsaquo;</a>
+  </li>
+  <li class="page-item" [class.disabled]="activePage >= lastPage" (click)="setPage(lastPage)">
+    <a class="page-link" style="cursor: pointer">&raquo;</a>
+  </li>
+</ul>
+<!--<ul class="pagination" *ngIf="dataLength > 15">-->
+  <!--<li class="page-item" *ngFor="let rows of rowsOnPageSet" [class.active]="rowsOnPage===rows" (click)="setRowsOnPage(rows)">-->
+    <!--<a class="page-link" style="cursor: pointer">{{rows}}</a>-->
+  <!--</li>-->
+<!--</ul>-->

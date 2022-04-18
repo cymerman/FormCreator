@@ -1,0 +1,60 @@
+.corner-settings .btn {
+  min-width: 1.2rem !important;
+}
+
+.corner-settings .btn-sm {
+  min-width: 1.2rem !important;
+}
+
+.corner-settings .btn.btn-sm {
+  min-width: 1.2rem !important;
+}
+
+.circle-icon {
+  background: cornflowerblue;
+  padding: 0.25rem;
+  border-radius: 50%;
+  font-size: 1rem;
+}
+
+.root-container .ngx-dnd-container{
+  border :0;
+  padding: 0;
+  margin: 0;
+  overflow:auto;
+  background-color: transparent !important;
+}
+
+.root-container .ngx-dnd-container.gu-empty, .builder-target .root-container .ngx-dnd-container{
+  padding:10px;
+  border: 0.2rem dashed;
+  border-radius: 0.3rem;
+}
+
+.root-container .ngx-dnd-container .ngx-dnd-item{
+  margin: 0 0 10px 0;
+  background-color: #f7f7f7;
+  border: 1px solid #d8d8d8;
+  overflow:auto;
+}
+
+.root-container .ngx-dnd-container .ngx-dnd-item:hover{
+  border: 1px solid #acacac;
+}
+
+.root-container .ngx-dnd-container .ngx-dnd-item .form-group{
+  overflow:auto;
+}
+
+.root-container .ngx-dnd-container .ngx-dnd-item .form-group .control-label{
+  float:left;
+}
+
+.root-container .ngx-dnd-container .ngx-dnd-item .form-group .corner-settings{
+  float:right;
+  margin-bottom: 10px;
+}
+
+.root-container .ngx-dnd-container .ngx-dnd-item .form-group>div{
+  clear:both;
+}
