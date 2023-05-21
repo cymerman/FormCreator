@@ -46,7 +46,7 @@ namespace FormsCreator.Domain.Db
         /// <summary>
         /// Formularze
         /// </summary>
-        public DbSet<Form> Forms { get; protected set; }
+        public DbSet<Form> Form { get; protected set; }
         
         /// <summary>
         /// Podczas konfiguracji DbContextu

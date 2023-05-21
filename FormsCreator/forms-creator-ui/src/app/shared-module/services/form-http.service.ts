@@ -16,7 +16,7 @@ export class FormHttpService {
   }
 
   public query(params: HttpParams): Observable<QueryResult<Form>> {
-    return this.httpClient.get<QueryResult<Form>>(this.formControllerUrl, {params: params});
+    return this.httpClient.get<QueryResult<Form>>(this.env.apiUrl +this.formControllerUrl, {params: params});
   }
 
   public getForm(id:string) {
@@ -24,6 +24,7 @@ export class FormHttpService {
   }
 
   public sendForm(formId:string,formData:string) {
-    return this.httpClient.post(this.env.apiUrl + this.formControllerUrl + formId, formData);
+    console.log(formData)
+    return this.httpClient.post(this.env.apiUrl + this.formControllerUrl + formId, {formData:formData});
   }
 }

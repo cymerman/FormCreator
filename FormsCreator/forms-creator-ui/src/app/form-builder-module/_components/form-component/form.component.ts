@@ -54,7 +54,7 @@ export class FormComponent implements OnInit,AfterViewInit {
     }
 
     let formData = this.formRenderer.getFormValues();
-    this.formHttpService.sendForm(this.formId,formData.toString()).subscribe(res => {
+    this.formHttpService.sendForm(this.formId,JSON.stringify(formData)).subscribe(res => {
       this.toastrService.success("Udalo sie wyslac formularz");
       this.sended = true;
     }, err => {

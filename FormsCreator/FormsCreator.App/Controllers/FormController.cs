@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using FormsCreator.Domain.Core.Base.Commands;
 using FormsCreator.Domain.Core.Base.Queries;
+using FormsCreator.Domain.Core.Forms.Commands;
 using FormsCreator.Domain.Core.Forms.Dto;
 using FormsCreator.Domain.Core.Forms.Queries.Form;
 using Microsoft.AspNetCore.Authorization;
@@ -50,11 +51,12 @@ namespace FormsCreator.App.Controllers
         
         [HttpPost]
         [Route("{id}")]
-        public async Task<IActionResult> SaveForm([FromRoute] string id)
+        public IActionResult SaveForm([FromRoute] string id,[FromBody] FormDetails formData)
         {
-            var result = await _queryProcessor.Process<GetFormQuery, FormDefinitionDto>(new GetFormQuery
+            var result = _commandExecutor.Execute<AddFormCommand, long>(new AddFormCommand
             {
-                Id = id
+                Id = id,
+                FormData = formData.FormData
             });
 
             return Ok(result);

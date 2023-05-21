@@ -34,7 +34,7 @@ namespace FormsCreator.Domain.Forms.CommandHandlers
                 CreatedOn = DateTime.Now
             };
 
-            _context.Forms.Add(entity);
+            _context.Form.Add(entity);
             _context.SaveChanges();
 
             return entity.Id;

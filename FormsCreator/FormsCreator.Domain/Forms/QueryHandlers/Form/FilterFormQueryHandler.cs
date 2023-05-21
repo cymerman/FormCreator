@@ -22,7 +22,7 @@ namespace FormsCreator.Domain.Forms.QueryHandlers.Form
         {
             var currentUserId = _currentUserProvider.GetUserId().Value;
             
-            var forms = _context.Forms.Include(x => x.FormDefinition)
+            var forms = _context.Form.Include(x => x.FormDefinition)
                 .Where(x => x.FormDefinition.CreatedBy == currentUserId)
                 .Select(x => new FormDto()
                 {
