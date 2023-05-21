@@ -31,14 +31,9 @@ namespace FormsCreator.Domain.Core.Forms
         public FormDefinition FormDefinition { get; set; }
         
         /// <summary>
-        /// Status
+        /// Json data
         /// </summary>
-        public FormStatus Status { get; protected set; } = FormStatus.WorkCopy;
-        
-        /// <summary>
-        /// Postac html formularza
-        /// </summary>
-        public string HtmlForm { get; set; }
+        public string Data { get; set; }
         
         /// <summary>
         /// Historia formularza

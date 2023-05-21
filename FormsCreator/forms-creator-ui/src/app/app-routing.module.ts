@@ -18,7 +18,8 @@ const routes: Routes = [
     ]
   },
   {
-    path: 's/:id', component: FormComponent
+    path: 's/:id', component: FormComponent,
+    loadChildren: () => import('./form-builder-module/form-builder.module').then(m => m.FormBuilderModule),
   },
   {
     path: "",
@@ -45,6 +46,13 @@ const routes: Routes = [
           breadcrumb: "Twoje konto"
         },
         loadChildren: () => import('./account-module/account.module').then(m => m.AccountModule),
+      },
+      {
+        path:"forms",
+        data: {
+          breadcrumb: "Formularze"
+        },
+        loadChildren: () => import('./form-builder-module/form-builder.module').then(m => m.FormBuilderModule),
       }
     ]
   },

@@ -26,6 +26,7 @@ namespace FormsCreator.Domain.Core.Exceptions
         public static class AppExceptionCodes
         {
             public const string StatusChangeError = "20001";
+            public const string FormNotPublished = "20002";
         }
     }
 }

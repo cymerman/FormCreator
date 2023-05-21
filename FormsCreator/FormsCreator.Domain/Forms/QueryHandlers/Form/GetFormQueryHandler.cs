@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using FormsCreator.Domain.Core.Base.Queries;
 using FormsCreator.Domain.Core.Exceptions;
+using FormsCreator.Domain.Core.Forms;
 using FormsCreator.Domain.Core.Forms.Dto;
 using FormsCreator.Domain.Core.Forms.Queries.Form;
 using FormsCreator.Domain.Db;
@@ -26,6 +27,11 @@ namespace FormsCreator.Domain.Forms.QueryHandlers.Form
             if (formDefinition == null)
             {
                 throw new NotFoundException();
+            }
+
+            if (formDefinition.Status != FormDefinitionStatus.Published)
+            {
+                throw new DomainException(DomainException.AppExceptionCodes.FormNotPublished);
             }
 
             var dto = FormDefinitionDto.MapFrom(formDefinition);

@@ -3,15 +3,17 @@ using System;
 using FormsCreator.Domain.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace FormsCreator.Domain.Db.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230521112035_FormSchemeChanges")]
+    partial class FormSchemeChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,7 +34,6 @@ namespace FormsCreator.Domain.Db.Migrations
                         .HasColumnName("created_on");
 
                     b.Property<string>("Data")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("data");
 
@@ -243,24 +244,24 @@ namespace FormsCreator.Domain.Db.Migrations
                         {
                             Id = 1L,
                             CreatedBy = 1L,
-                            CreatedOn = new DateTime(2023, 5, 21, 13, 22, 6, 513, DateTimeKind.Local).AddTicks(4641),
+                            CreatedOn = new DateTime(2023, 5, 21, 13, 20, 32, 215, DateTimeKind.Local).AddTicks(5349),
                             Email = "mateuszcymerman95@gmail.com",
                             IsAdmin = true,
                             Login = "admin",
                             ModifiedBy = 1L,
-                            ModifiedOn = new DateTime(2023, 5, 21, 13, 22, 6, 530, DateTimeKind.Local).AddTicks(343),
+                            ModifiedOn = new DateTime(2023, 5, 21, 13, 20, 32, 231, DateTimeKind.Local).AddTicks(9052),
                             Password = "admin"
                         },
                         new
                         {
                             Id = 2L,
                             CreatedBy = 1L,
-                            CreatedOn = new DateTime(2023, 5, 21, 13, 22, 6, 530, DateTimeKind.Local).AddTicks(2954),
+                            CreatedOn = new DateTime(2023, 5, 21, 13, 20, 32, 232, DateTimeKind.Local).AddTicks(1331),
                             Email = "cymekdeveloper@gmail.com",
                             IsAdmin = false,
                             Login = "testowy",
                             ModifiedBy = 1L,
-                            ModifiedOn = new DateTime(2023, 5, 21, 13, 22, 6, 530, DateTimeKind.Local).AddTicks(3023),
+                            ModifiedOn = new DateTime(2023, 5, 21, 13, 20, 32, 232, DateTimeKind.Local).AddTicks(1402),
                             Password = "admin"
                         });
                 });

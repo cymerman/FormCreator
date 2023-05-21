@@ -101,7 +101,6 @@
                 <form-renderer-components-container [components]="column.childrens"
                                                          [form]="form"
                                                          [isSubmitted]="isSubmitted"
-                                                         [dictionaryData]="dictionaryData"
                                                          (addRow)="addRowHandler($event)"
                                                          (removeRow)="removeRowHandler($event)"></form-renderer-components-container>
               </div>
@@ -111,7 +110,6 @@
               <form-renderer-components-container [components]="component.childrens"
                                                        [form]="form"
                                                        [isSubmitted]="isSubmitted"
-                                                       [dictionaryData]="dictionaryData"
                                                        (addRow)="addRowHandler($event)"
                                                        (removeRow)="removeRowHandler($event)"></form-renderer-components-container>
             </div>

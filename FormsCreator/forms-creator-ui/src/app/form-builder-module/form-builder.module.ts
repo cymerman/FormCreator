@@ -14,13 +14,16 @@ import {FormRendererTableComponent} from "./_components/form-renderer-table-comp
 import {FormComponentStyleDetailsComponent} from "./_components/form-component-details-component/_components/form-component-style-details/form-component-style-details.component";
 import {SafeHtmlPipe} from "./_pipes/safe-html.pipe";
 import {ModalModule} from "ngx-bootstrap/modal";
-import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
+import {BsDatepickerModule, BsLocaleService} from "ngx-bootstrap/datepicker";
 import {AccordionModule} from "ngx-bootstrap/accordion";
 import {TooltipModule} from "ngx-bootstrap/tooltip";
 import {TabsModule} from "ngx-bootstrap/tabs";
 import {SharedModule} from "../shared-module/shared.module";
 import {NgxDnDModule} from "@swimlane/ngx-dnd";
-import {FormComponent} from "./_components/form-component/form.component";
+import {RouterModule} from "@angular/router";
+import {FormListComponent} from "./_components/form-list-component/form-list.component";
+import {BsDropdownModule} from "ngx-bootstrap/dropdown";
+import {FormBuildingRoutingModule} from "./form-building-routing.module";
 
 @NgModule({
   declarations: [
@@ -34,14 +37,15 @@ import {FormComponent} from "./_components/form-component/form.component";
     FormRendererComponentsContainerComponent,
     FormRendererPageComponent,
     FormRendererTableComponent,
-    FormComponent,
     SafeHtmlPipe,
+    FormListComponent
   ],
   exports: [
     FormRendererComponent,
     FormBuilderComponent
   ],
   imports: [
+    FormBuildingRoutingModule,
     ReactiveFormsModule,
     FormsModule,
     SharedModule,
@@ -51,7 +55,9 @@ import {FormComponent} from "./_components/form-component/form.component";
     BsDatepickerModule,
     TabsModule,
     AccordionModule,
-    TooltipModule
+    TooltipModule,
+    RouterModule,
+    BsDropdownModule
   ],
   entryComponents: [
     FormComponentDetailsModalComponent

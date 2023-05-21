@@ -1,1 +1,23 @@
-﻿XD
+﻿<br/><br/>
+
+<div class="container" *ngIf="!sended">
+  <div class="row">
+    <div class="col-sm-12">
+      <form-renderer [formSettings]="formModel" *ngIf="done"></form-renderer>
+    </div>
+  </div>
+
+  <div style="text-align: right">
+    <button type="button" class="btn btn-success" (click)="send()">WYSLIJ</button>
+  </div>
+</div>
+
+<div class="container" *ngIf="sended">
+  <div class="row">
+    <div class="col-sm-12">
+      <span style="font-weight: bold;">Dziekuje za skorzystanie!</span>
+    </div>
+  </div>
+</div>
+
+

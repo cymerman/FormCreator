@@ -1,0 +1,71 @@
+﻿<div class="tabs-content">
+  <tabset>
+    <tab>
+      <ng-template tabHeading>
+  <span tooltip="Tutaj widzisz listę wypelnionych formularzy na podstawie stworzonej przez Ciebie definicji."
+        placement="bottom"
+        container="body"
+        [delay]="500">
+Definicje formularzy
+  </span>
+      </ng-template>
+
+      <helper-list-filter [filterItems]="filters"
+                          (filterClick)="onFilterClick()"></helper-list-filter>
+
+      <div class="row">
+        <div class="col-sm-12 table-responsive-lg table-wrapper">
+          <table helperTable
+                 #table="helperTable"
+                 [helperTableOrderBy]="'formUid'"
+                 [helperTableOrderDirection]="1"
+                 (helperTableGetData)="loadData($event)"
+                 class="table table-striped bordered wider-table">
+            <thead>
+            <tr>
+              <th>
+                <column-sorter [fieldName]="'formUid'">
+                  Id definicji formularza
+                </column-sorter>
+              </th>
+              <th>Data utworzenia</th>
+              <th>Json formularza</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="rows.length > 0">
+            <tr *ngFor="let row of rows">
+              <td>
+                {{row.formUid}}
+              </td>
+              <td>
+                {{row.createdOn}}
+              </td>
+              <td>
+                {{row.formData}}
+              </td>
+            </tr>
+            </tbody>
+
+            <tbody *ngIf="rows.length === 0">
+            <tr>
+              <td colspan="3" class="no-records">
+                Brak wyników spełniających kryteria
+              </td>
+            </tr>
+            </tbody>
+
+            <tfoot>
+            <tr>
+              <td colspan="3">
+                <paginator [paginatorDataLength]="totalRows">
+                </paginator>
+              </td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+    </tab>
+  </tabset>
+</div>

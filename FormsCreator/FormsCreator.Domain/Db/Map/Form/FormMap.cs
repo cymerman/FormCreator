@@ -17,6 +17,9 @@ namespace FormsCreator.Domain.Db.Map.Form
                 .ValueGeneratedOnAdd();
             builder.Property(x => x.CreatedOn)
                 .IsRequired();
+            
+            builder.Property(x => x.Data)
+                .IsRequired();
 
             builder.HasOne(x => x.FormDefinition);
         }

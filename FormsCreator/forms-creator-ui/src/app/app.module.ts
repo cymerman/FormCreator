@@ -18,6 +18,8 @@ import {SharedModule} from "./shared-module/shared.module";
 import {RequestInterceptorService} from "./shared-module/services/request.interceptor";
 import {FormCreatorEnvironment} from "./shared-module/models/form-creator-environment.model";
 import {AccountModule} from "./account-module/account.module";
+import {FormComponent} from "./form-builder-module/_components/form-component/form.component";
+import {FormBuilderModule} from "./form-builder-module/form-builder.module";
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import {AccountModule} from "./account-module/account.module";
 
     LayoutAppComponent,
     DashboardComponent,
+    FormComponent
   ],
   imports: [
     SharedModule.forRoot(),
@@ -40,7 +43,8 @@ import {AccountModule} from "./account-module/account.module";
     ReactiveFormsModule,
     ToastrModule.forRoot(),
     CollapseModule.forRoot(),
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    FormBuilderModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: "pl"},
